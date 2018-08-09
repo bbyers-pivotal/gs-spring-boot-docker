@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: gs-spring-boot
+    deployment: pks-workshop
+  name: spring-boot-service
+spec:
+  ports:
+  - port: 8080
+    name: ui
+    nodePort: 31529
+  type: NodePort
+  selector:
+    app: gs-spring-boot
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: gs-spring-boot
+    deployment: pks-workshop
+  name: gs-spring-boot
+spec:
+  containers:
+  - image: gcr.io/fe-bbyers/gs-spring-boot-docker:latest
+    name: gs-spring-boot
+    ports:
+    - containerPort: 8080
+      protocol: TCP
